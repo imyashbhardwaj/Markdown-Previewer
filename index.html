@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add React in One Minute</title>
+  </head>
+  <body>
+
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+    
+    <center>
+    	<h1><u>Markdown Previewer</u></h1>
+    </center>
+    
+    <div id='content'>
+
+    </div>
+    
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src=https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js></script>
+
+
+  </body>
+</html>
+
+<style>
+	#content{
+		margin-left: 20px;
+		margin-right: 20px;
+
+	}
+	#editor{
+		width:80%;
+		height:200px;
+	}
+	#preview{
+		border-style: solid;
+		border-width: 2px;
+		padding:15px;
+		background-color: white;
+	}
+	body{
+		background-color: rgb(230,230,230)
+	}
+</style>
+
+<script type="text/babel">
+
+marked.setOptions({
+  breaks: true
+})
+class Editor extends React.Component{
+  constructor(props){
+    super(props);
+
+    this.state={
+    	input:"\n# Heading 1\n## Heading 2\n[link](https://www.example.com)\n\n`print \"this is code\"`\n```\n{\n  \"firstName\": \"Bruce\",\n  \"lastName\": \"Wayne\",\n  \"age\": 35\n}\n```\n\n- list item 1\n- list item 2\n\n> blockquote\n\n**Bold text**\n\n![image](image.jpg)\n"
+    }
+    this.handleChange=this.handleChange.bind(this)
+  }
+  handleChange(event){
+  	this.setState({
+  		input:event.target.value
+  	})
+
+  }
+  
+
+  render(){
+  var x=marked(this.state.input)
+ 
+    return (
+      <div>
+
+        <h2>Editor</h2>
+  		<textarea id='editor' onChange={this.handleChange} value={this.state.input}> </textarea>
+  		<h2>Preview</h2>
+  		<div id='preview' dangerouslySetInnerHTML={{ __html: x }}>
+  		
+		</div>
+      </div>
+      ); 
+  }
+}
+
+
+ReactDOM.render(<Editor />, document.getElementById("content"));
+
+
+</script>
